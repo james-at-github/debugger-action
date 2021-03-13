@@ -1,0 +1,18 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Debug Session
+      uses: csexton/debugger-action@master
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: ~/work/v8.tgz
+        asset_name: v8
+        overwrite: true
+        body: "v8"
